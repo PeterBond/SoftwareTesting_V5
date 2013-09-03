@@ -34,3 +34,28 @@ blowup s = let
              blowHelper n (h:t) = replicate n h ++ blowHelper (n+1) t
            in
              blowHelper 1 s
+
+srtString :: [String] -> [String]
+srtString []  = error "empty list"
+srtString [h] = [h]
+srtString s   = let
+                srtHelper :: [String] -> String
+                srtHelper [h]   = h
+                srtHelper (h:t) = max h (srtHelper t)
+              in
+                srtHelper s : srtString (drop 1 s)
+
+prefix :: String -> String -> Bool
+prefix [] ys = True
+prefix (x:xs) [] = False
+prefix (x:xs) (y:ys) = (x==y) && prefix xs ys
+
+substring :: String -> String -> Bool
+substring (x:xs) (y:ys) = prefix xs ys
+substring str1 (y:ys)   = prefix str1 (y:ys) || substring str1 ys
+
+lengths :: [[a]] -> [Int]
+lengths a = map length a
+
+sumLengths :: [[a]] -> Int
+sumLengths a = sum (lengths a)
