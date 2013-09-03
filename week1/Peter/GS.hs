@@ -25,3 +25,12 @@ count c [h]   | h == c    = 1
               | otherwise = 0
 count c (h:t) | h == c    = 1 + count c t
               | otherwise = count c t
+
+blowup :: String -> String
+blowup s = let 
+             blowHelper :: Int -> String -> String
+             blowHelper n [] = []
+             blowHelper n [h] = replicate n h
+             blowHelper n (h:t) = replicate n h ++ blowHelper (n+1) t
+           in
+             blowHelper 1 s
