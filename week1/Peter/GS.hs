@@ -12,13 +12,6 @@ removeFst [h]   x | h == x    = []
 removeFst (h:t) x | h == x    = t
                   | otherwise = h : (removeFst t x)
 
-removeFstJ :: Int -> [Int] -> [Int]
-removeFstJ m []     = error "empty list"
-removeFstJ m [x]    | x == m = []
-                    | otherwise = [x]
-removeFstJ m (x:xs) | x == m = xs
-                    | otherwise = x : (removeFstJ m xs)
-
 count :: Char -> String -> Int
 count c []    = 0
 count c [h]   | h == c    = 1
@@ -39,11 +32,11 @@ srtString :: [String] -> [String]
 srtString []  = error "empty list"
 srtString [h] = [h]
 srtString s   = let
-                srtHelper :: [String] -> String
-                srtHelper [h]   = h
-                srtHelper (h:t) = max h (srtHelper t)
-              in
-                srtHelper s : srtString (drop 1 s)
+                  srtHelper :: [String] -> String
+                  srtHelper [h]   = h
+                  srtHelper (h:t) = max h (srtHelper t)
+                in
+                  srtHelper s : srtString (drop 1 s)
 
 prefix :: String -> String -> Bool
 prefix [] ys = True
@@ -59,3 +52,5 @@ lengths a = map length a
 
 sumLengths :: [[a]] -> Int
 sumLengths a = sum (lengths a)
+
+
